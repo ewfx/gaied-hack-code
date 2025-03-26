@@ -1,0 +1,412 @@
+Received: from PN2PR01MB10369.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:1fb::5)
+ by PN3PR01MB7712.INDPRD01.PROD.OUTLOOK.COM with HTTPS; Tue, 25 Mar 2025
+ 13:59:55 +0000
+ARC-Seal: i=2; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=pass;
+ b=SdAN/COF4pYfxJLvlbSGZ7xAkziq6B8BYZlBlOfTQG4buJyUXT84K5DsD2ip7xZGH2aW4Yi06En1BGyWmupdv1lmV1vFz4m1fHpHUB9J0mTfXW6gJNZEVF+BUdc3YbqE44k4ekIyqiVWKKVzvLaWd70s6IE3HBiRKBRfLcLODcsdw5N8zHpWpjhH1mmRJwon/5S05AxSoHlXY77Ogeh00cCNLPLHkkq75+8i2u7P4orPRBvCuCOJjOzMvJKkrazWQmVSWMRKOOL+p96B58zaRqZ4+KhRNVNJrplslMXiiP3CKalNmxEtEGHYaDRmA7Tc/iUYxc5AuMMseFvHlkDNAw==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=/yUh3KTnxZ3zEl9R/vTfXU/YcPI5O3Lvi6bZFyBl7DU=;
+ b=pdpKl1Cx/AZ9k7WkYr2emADqRX6b0IvPrrvALc0Pcg1ocWRgNEtLg2cUf2KAu1mHUMU0soMFP3Cu7lFpxk3WeUacbM4tO1+/pDPslhfU5xwv0B/rs1bIbAMPyY5Wxc5PQDYgnQwwxhgwYIVIi2jenQlDK1kFwr+K+aXDl1LLU9VpJhKtjsoo0GjBs0g+VuXcR5vaQ5nFBWEuBlrHpl1FNijY/0dCEyxfAlf71yCCvJ4RdzqE7QO1kxdm5SC25CBpb11KQ4oBhfsFVrNxMDvnoIPfwJOL9J4BYkmpV5J+7dNXDaOEVsYTggKWi42VI9k27lP3imDaDtrBS15hd2k0Dg==
+ARC-Authentication-Results: i=2; mx.microsoft.com 1; spf=pass (sender ip is
+ 52.103.67.38) smtp.rcpttodomain=outlook.com smtp.mailfrom=outlook.com;
+ dmarc=pass (p=none sp=quarantine pct=100) action=none
+ header.from=outlook.com; dkim=pass (signature was verified)
+ header.d=outlook.com; arc=pass (0 oda=0 ltdi=1)
+Received: from MW4PR03CA0157.namprd03.prod.outlook.com (2603:10b6:303:8d::12)
+ by PN2PR01MB10369.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:1fb::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.42; Tue, 25 Mar
+ 2025 13:59:53 +0000
+Received: from CO1PEPF000042AE.namprd03.prod.outlook.com
+ (2603:10b6:303:8d:cafe::6b) by MW4PR03CA0157.outlook.office365.com
+ (2603:10b6:303:8d::12) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8534.42 via Frontend Transport; Tue,
+ 25 Mar 2025 13:59:51 +0000
+Authentication-Results: spf=pass (sender IP is 52.103.67.38)
+ smtp.mailfrom=outlook.com; dkim=pass (signature was verified)
+ header.d=outlook.com;dmarc=pass action=none
+ header.from=outlook.com;compauth=pass reason=100
+Received-SPF: Pass (protection.outlook.com: domain of outlook.com designates
+ 52.103.67.38 as permitted sender) receiver=protection.outlook.com;
+ client-ip=52.103.67.38; helo=MA0PR01CU012.outbound.protection.outlook.com;
+ pr=C
+Received: from MA0PR01CU012.outbound.protection.outlook.com (52.103.67.38) by
+ CO1PEPF000042AE.mail.protection.outlook.com (10.167.243.43) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.8534.20
+ via Frontend Transport; Tue, 25 Mar 2025 13:59:51 +0000
+X-IncomingTopHeaderMarker: OriginalChecksum:566B50A97FC194D7EC8C30700625E3A4999061BA27CC5D297904173D1BD2971D;UpperCasedChecksum:2177ED77FA6E6E7EBDCD08579E1B39E072F6BFA2C2192C467D3731E5BF49C55B;SizeAsReceived:7767;Count:37
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=OVHSXiVgjZFKiHvaV3Ov7FKmt88RU5jPQo9cdGG1Qt88L1mIHbYK3f7juhHu8GeZGflyhYUeUIZoWZrMrVWu/zxnQEuQSNsTviyBaJP4WgYZ1S/pAvkP0vS+kmKkRcEih0w2N+3/XdZDAewMJJWEWtLWxkzt7O3H7t8QA/LWbHGJ6v/phrYbX8+pKnwrMN26THhfRfRbxbE7jp/MNF/cP0elQi3JFzahQK52IotQCNVRlO12TlgEl2VrvpfPKc3SCuyh9Nh5fMRgJ8yas16+DUGT8pk/qlGYk047HVnhh4bMLmc1FWvsL7CWWqgx+bQ7yHaYL6/VHIdn8CozbBeB8A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=/yUh3KTnxZ3zEl9R/vTfXU/YcPI5O3Lvi6bZFyBl7DU=;
+ b=xnFEEMqBmtMcTdTBYKuOutNprB3kz2bw6PUapBz6rrzO/iH6a1JUSkgdhAyuiZ9jmzComCXdv9hYi54YciUj/q1nhNEmzqyLDV3TmnuQ5F2ju6hLpDKkDAnYjNAIrpq7dKSGNgYviiPUSsdR1cvFR69TtelLdYhZ1Fp3aLJN53Ek1MClooRgekyqx3j+cGr1+cASdOJ6HHhRf3sH02r5AbtLz4hNAmdoAsVhP57LTgjYkXhV6E3IBhjLTlOUtoW49/y5Efa9JrxNGtLLvqJJyvfFwTd/+RhEqzSijP96KevMdnjDfkT1s/lTocvHMHfRPpZjD6eGvLJWJ7maLWrJfg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=/yUh3KTnxZ3zEl9R/vTfXU/YcPI5O3Lvi6bZFyBl7DU=;
+ b=Y7fmIWVBkBV3rK2m2JmCM+MBqsYaXJKuPRCn7Fn00fi1JAZJ4QtpPo3hlyl0YNC3CXe6E78vE58I6T4kBp3b6FAzZdUygZySHLQM4ZBP+8DdsvQzBTx5WSUQQtCNesK8db+0XDZXPv2MRnSX/GrWfpgloF0VAeWpc8Jic/Lv9QDnPfa8XlEyzht0AxqnF7n87J9+p4Lc4+Tl02DPd9DpqSYlkYJM5NQuDGoo/cZynyvvHSlpWn4jWXATuW2OcUkdyzFr6fTDvjRJI8YG4R0POmkYjK8+0fNUb6sW/6Y4OCEbHp3KEwkcoU7C8g49Sy6ylhHSbewiOv4K5rqrsqkKlw==
+Received: from PN3PR01MB7712.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:cd::13)
+ by PN2PR01MB4300.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:14::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.42; Tue, 25 Mar
+ 2025 13:59:48 +0000
+Received: from PN3PR01MB7712.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::876b:e79e:6aa5:deef]) by PN3PR01MB7712.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::876b:e79e:6aa5:deef%3]) with mapi id 15.20.8534.040; Tue, 25 Mar 2025
+ 13:59:48 +0000
+From: Tina Ahuja <tina.ahuja@outlook.com>
+To: Tina Ahuja <tina.ahuja@outlook.com>
+Subject: Commitment Change
+Thread-Topic: Commitment Change
+Thread-Index: AQHbnYz6dxTdp6AzdE+uEYeiKCxFGg==
+Date: Tue, 25 Mar 2025 13:59:48 +0000
+Message-ID: <PN3PR01MB7712424EDCCD8DDC2E495C4897A72@PN3PR01MB7712.INDPRD01.PROD.OUTLOOK.COM>
+Accept-Language: en-IN, en-US
+Content-Language: en-IN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+x-ms-traffictypediagnostic: PN3PR01MB7712:EE_|PN2PR01MB4300:EE_|CO1PEPF000042AE:EE_|PN2PR01MB10369:EE_|PN3PR01MB7712:EE_
+X-MS-Office365-Filtering-Correlation-Id: 676e8091-134e-4216-fc34-08dd6ba5506a
+X-Microsoft-Antispam-Untrusted: BCL:0;ARA:14566002|15080799006|19110799003|8060799006|7092599003|15030799003|8062599003|12121999004|461199028|56899033|440099028|3412199025|3430499032|102099032|19111999003|12091999003|1710799026;
+X-Microsoft-Antispam-Message-Info-Original: =?us-ascii?Q?xXpGcOi+1VhBY1iKWZhFAIwhq54UbxyBPBTHGsIhZRTjqJZPYFWkypW7fIPV?=
+ =?us-ascii?Q?X2aPmaXem/x18z+e9YdR797mwxUwYyxkpfiBJB9ahmL6YtACOuVq1GdT9jGl?=
+ =?us-ascii?Q?c57x+FVuSV41B8R9csDvCVhipyuFRK/YgHASzRn4YP9E20tumIu/uGnQi19A?=
+ =?us-ascii?Q?WJRh89R0VfgE6dFgbnPmBIeQLa5pW+ePzCSSDVD/fhUrQFbFerwDpc7cv+9L?=
+ =?us-ascii?Q?TDJOWFk5FlwP7thehsFyXHgspV7St1hHsYWmeN8Kqh4CGFir+ERYdVBnxOPJ?=
+ =?us-ascii?Q?oFhX0VnqbDqw42SkIcQJf7BBp5SRF3WniDqSkoaW6EoiUXpH+dV9H36hogvJ?=
+ =?us-ascii?Q?bXj0ZPzwU1RHevJmdWmj3Z/9o9R0U56ejBj3muME+rqohS2m4K6CwYdsSohT?=
+ =?us-ascii?Q?yCFXP49fWWxBZy5PPKcvL+RTwtlamgMMdoTO1RFO1EH+oB79E7DS5coDtm75?=
+ =?us-ascii?Q?ByrlmvhAnU5tT6rkQ1+NYVcdWOp1bFmldbuOMB7OvbDTCuamtLxPJdFRNEn8?=
+ =?us-ascii?Q?el+7cL9oX6rdndHpYlpW0fc36lB0T0dfZQhabOLC1D3nXBRUhWt7ZagB/bSF?=
+ =?us-ascii?Q?A8muPEo8GmwUAyzxWOo5kKfzxLD9Ux9mi15JU0hDTkFL89T+3qxI5vwuYQnB?=
+ =?us-ascii?Q?BOBLmKUNnI2IglABBtPenCp9AeLZO6HhMJe6uX/ByiJPtK8dSC18zp3oYrxf?=
+ =?us-ascii?Q?T+764m8DdkDuVXEeioW5sxC4zRLmPEJ2HqPTYJDqONHcdYt+L3rMEqGpKSzo?=
+ =?us-ascii?Q?CDBq8sNIp4RUCz2Wi248ePmJGH838xIN3Kj5VhgzJuLiuwk53YOEAPUKq4jM?=
+ =?us-ascii?Q?TZ+IE3bljm77KP2xVlSjQPB6Ivu0jft126IqwzijmV6d48ILDs4Zy/OD31wF?=
+ =?us-ascii?Q?064Sgkbpbv3Vi42gCPLggVyRZWuGOEKvVMMELAbtmuNkmnCIGaRVXWNdpgjz?=
+ =?us-ascii?Q?pxTzqXPacA0Jawnyp1VMdFhvJYLPe38RcKjAB4ORMe0rX0WXo2wMPZyD2fQd?=
+ =?us-ascii?Q?L+G863Wz5y7uHgd3GAIj//r5xaBFnjiXftgvhnOd77bSx+M2Da6sve29hmUc?=
+ =?us-ascii?Q?WlIKBWqGF7bVY7IBDX0Ry5jZn7mvCMjisYmAzmOlMdQGGoc89MgEbbj43O47?=
+ =?us-ascii?Q?yWcXFpV42hmQD1fH/PSmEdInzxFOufLPFBcixoqi/j1C9Bpf6IX+3ookJD0v?=
+ =?us-ascii?Q?QAKm9VjS9T7etL6zBxemortqm+Ygsx0HJp5Vw1MBeTeFx4DiAlq5ZV+H9zGy?=
+ =?us-ascii?Q?8rVbgMp5yFRP16waCwhOH/UdaANCzT5zkbeEy6zpBQ=3D=3D?=
+X-MS-Exchange-AntiSpam-MessageData-Original-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-Original-0: =?Windows-1252?Q?5VFhg4cdDOMeGnn0fsTJ9yuN+tWJcGMndAfZaVIpxEGQjXTGsvEVNix/?=
+ =?Windows-1252?Q?Ksf5tIi7HsQY++jaeP0UmXbs7/ahI00sdqdO2b3rZR/m59NANiL1BwnM?=
+ =?Windows-1252?Q?VpcqeKroZA6uavvh1lCaXP43/evvxpdxGnT3mwMNSZlm6AzViVG3/H3B?=
+ =?Windows-1252?Q?aH4Z/Z/fFQvshF1vKf6ZXrkWAYdoSaJ6BjaWGCcD8n2P0fevamsceq84?=
+ =?Windows-1252?Q?RSXE9nXyMDzREYAkdIQ85lkMzESyM+004aHDj+infKuxae6MZsbNB6LY?=
+ =?Windows-1252?Q?CGYpusgLyNk0J4CsJr9AYSW9CC+X8PVxAWYq52R17Yw/PLD5rpViYJ/Y?=
+ =?Windows-1252?Q?Tiio7gBtFLM4pLhAPAZpi9vgpuaa/CRU4KDHkOMWP9hOzyig3Y/jJvoA?=
+ =?Windows-1252?Q?OyWiZSz3yoFY2h+5SRWsqOlR8dM2MzZheiVFpSLehdjNZdyhMuPyrt+E?=
+ =?Windows-1252?Q?zif9h4hy5TKjsUgqtah4gt0THRH4Yr732yZRG5d+yzxRRWLGsC0/63my?=
+ =?Windows-1252?Q?wU6H+HTWjw4m9+OoiODRs/KRjIIwsAFaW6ersdEKQ3uRuXswKKF2kL0c?=
+ =?Windows-1252?Q?AnTQbr+mwXzWZq63QKo9+hOD84P4OXBvNFcB4+tmFhz13gArZBQwS4mR?=
+ =?Windows-1252?Q?NGm+gV6nODu428PKiGs3UFnbets0R+HeUoCxUgARlAcmFuzV54GxbIua?=
+ =?Windows-1252?Q?PyCnmmvAFob6MJN4PkavOPLhO8QygqZtPzg0kMOL7gbTZ18PVic86lRy?=
+ =?Windows-1252?Q?MOzEP6Qm/jDiPq1NNaDscXQzShuZ+kCPtPqMwhBYvhdX75RpkKrrpeWa?=
+ =?Windows-1252?Q?adJJZ5I5Ay3ez9U3OfN/6W7elrN3yAQLg0J2Y1IkHN48XkVN9HA7VdM+?=
+ =?Windows-1252?Q?oPVvQZcWFUfx812U2rgdGychhlPNL1buGyQH1ZS1keeDwxqjanLZsiuR?=
+ =?Windows-1252?Q?sSxwAVcC0az+c1E2UEp6QNIh/QzEz8PtEpC1NXQfrYBZTULpg2pYnEDL?=
+ =?Windows-1252?Q?tnzIAH02oq3Yq0nGHla1zjUuBrzgcr570mA44EoeL7jsqBmAFYhhAXo2?=
+ =?Windows-1252?Q?cqzgdQslpa/ryGFPglus9C58RsZ6WeucfUf7pcY4muDhNZCJc4KgCSt+?=
+ =?Windows-1252?Q?SVlV9ih33fYOq0Hz+loLtFun0Ybl1bQfObFqymVxkxuqgHPXBnXWiXyg?=
+ =?Windows-1252?Q?mFthJeCUuo25oYkFt+xzl92dsNwiREVOju6MB3eZOu0aune44fkOCGzY?=
+ =?Windows-1252?Q?bG66XUsUZdbjmeTo8WR1lMZMynI3wkamId5IVwr87VoUU3KnMfOx+pkb?=
+ =?Windows-1252?Q?PBdswBF2S6VeP1pCO/OBdgq3LwLPS23j6migI5dS0NmFkL4wxbx1Xobq?=
+ =?Windows-1252?Q?hGDxUqCjGDT9wbDHIuGjhTYsRJLE5X3bJCo=3D?=
+Content-Type: multipart/alternative;
+	boundary="_000_PN3PR01MB7712424EDCCD8DDC2E495C4897A72PN3PR01MB7712INDP_"
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN2PR01MB4300
+X-IncomingHeaderCount: 37
+Return-Path: tina.ahuja@outlook.com
+X-MS-Exchange-Organization-ExpirationStartTime: 25 Mar 2025 13:59:51.9442
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id: 676e8091-134e-4216-fc34-08dd6ba5506a
+X-EOPAttributedMessage: 0
+X-EOPTenantAttributedMessage: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa:0
+X-MS-Exchange-Organization-MessageDirectionality: Incoming
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: CO1PEPF000042AE.namprd03.prod.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersPromoted: CO1PEPF000042AE.namprd03.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-MS-Exchange-Organization-AuthSource: CO1PEPF000042AE.namprd03.prod.outlook.com
+X-MS-Exchange-Organization-AuthAs: Anonymous
+X-MS-UserLastLogonTime: 3/25/2025 1:56:31 PM
+X-MS-Office365-Filtering-Correlation-Id-Prvs: 36541ab3-a0c4-4df2-5b6e-08dd6ba54e81
+X-MS-Exchange-EOPDirect: true
+X-Sender-IP: 52.103.67.38
+X-SID-PRA: TINA.AHUJA@OUTLOOK.COM
+X-SID-Result: PASS
+X-MS-Exchange-AtpMessageProperties: SA|SL
+X-MS-Exchange-Organization-SCL: 1
+X-Microsoft-Antispam: BCL:0;ARA:1444111002|19300799024|7140799003|461199028|13020799006|58200799018|47200799021|56899033|1370799030|1380799030|1360799030|3412199025|440099028|1710799026;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Mar 2025 13:59:51.4911
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 676e8091-134e-4216-fc34-08dd6ba5506a
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-AuthSource: CO1PEPF000042AE.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: Internet
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN2PR01MB10369
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:03.9965367
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.8534.033
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;ex:0;auth:1;dest:I;OFR:SpamFilterPass;ENG:(5062000308)(920221119095)(90000117)(920221120095)(90013020)(91025020)(91040095)(9050020)(9060121)(9100341)(1000006)(944500132)(2008001181)(4810010)(4910033)(9920006)(9510006)(10105021)(9320005)(9230038)(120001)(1110175);
+X-Message-Delivery: Vj0xLjE7dXM9MDtsPTA7YT0wO0Q9MTtHRD0xO1NDTD0tMQ==
+X-Microsoft-Antispam-Message-Info:
+	=?Windows-1252?Q?VmASn5/jSsSHJSHf+wy6SJvwq1MoRBCAKhRZLMhd1e5YV3q3SF+ZpLFg?=
+ =?Windows-1252?Q?tJVf2YVm9Hs9IN+cuV1VDOlwOOiMg4rWTPbjEriJz3JjfesPdE9dcg5l?=
+ =?Windows-1252?Q?gMH0H2LlD7KsPdHHmI9SgAokCr/sku3wLqZPjKc7OoHIaqRC+sqQnpSz?=
+ =?Windows-1252?Q?XBihFhdhVBcjCMb7rpPDxxPi968Rr4/yHz3sm6n9yOrokpaMWlfcq9Nl?=
+ =?Windows-1252?Q?JkQI9Gq67lObNCtPYTyPeHV7Wc6U3AHk6K/uyY0WKv2k0Ke+xYusV/xd?=
+ =?Windows-1252?Q?oAKqfLglOMudM+R6X/iPXkugFrlOtv8n56mvuAW78plmF87j/GKkTGjA?=
+ =?Windows-1252?Q?P3SaEpCiSqUvrETeEGlQHZ3lYLwewIfVppxGE8B0P1PanhRI1sGZ3aWD?=
+ =?Windows-1252?Q?3Of6OJ9rwQ8ygym/6zQwvZTdNIo/6tSqX2lsEZ9EiF4A/DiI3QYQOoiX?=
+ =?Windows-1252?Q?go3HdsxAlJyFpRE9huASmU/lPyKmUVszWpkEA44BXdqIhtFi6GCxmAM/?=
+ =?Windows-1252?Q?OQuk/nG9s7cmJfMCAOifyUmWPzFdN2xoTPx1CgQ3v5BTj2qmN0nDOSja?=
+ =?Windows-1252?Q?wMao5Uc1HTSoy0vL10g+vJOT/Sg9gnvCr76CEn57eJ1Q437TQ5mVlFGY?=
+ =?Windows-1252?Q?tEF33r4x4iSd51bVBr9fYK2lJk+8lgDPhlnJPogqwueVvrRuxbgjl+ky?=
+ =?Windows-1252?Q?KOgiAuAEFjSm3PbR08mn+F+cvnF9hRZm1vSYjPILCqKnPD4eidq2PgmC?=
+ =?Windows-1252?Q?vGQBEUt8LKV54z/xj0Q0QFBbhhFopWBws7nho5NzSn7KnX2Y12CWbkd6?=
+ =?Windows-1252?Q?0CyNnmUzfWhq9ouUrw7TcrrCUBFAEW4AO9cmyFnW/7yS9O4f8EoijVt9?=
+ =?Windows-1252?Q?+PQ3fi/RsgpugotZj7yoQBhPAJMqs/Tuke9u0GpiOGDKHeEjCtVpmtdy?=
+ =?Windows-1252?Q?mEthYF5bGFM1Lfm6EcRza+np231zGZlMRYwvK/BhCdE4H3TjoRQWRi2d?=
+ =?Windows-1252?Q?wkG4EqmBE5f6anQGr8yaoqXwuprBWbtn3UBtDCE+qfa3nSRN1daxkWmc?=
+ =?Windows-1252?Q?W0LV5tKOjThX0oqYbylzNeLKuGZA9z+xvgCafUUVv/bD4FVlieVvIwxK?=
+ =?Windows-1252?Q?MlpqGrmi5ikP9010MwmFfwVEv2DEqHlaCQxm1WjKXaBBlQ9xjjui57mT?=
+ =?Windows-1252?Q?u5yr+xkNO0ipG15MmWcSIaQpOMgsNxpUrXVvimogoULn3X8vt2FFbQuQ?=
+ =?Windows-1252?Q?ucdGaWc+Y4iNgqsFLMDZEwwoVW3htySwAnJjpPHaL64UvcsnKUwhOeBB?=
+ =?Windows-1252?Q?eX9d66hDpjxTMYfQlIXWRJdyYzcnowGogvZO2zHMu8COrHDeqplE6tzb?=
+ =?Windows-1252?Q?+oGo/t+Igt8t86QcBHpuMyMusFJ5Zd2eMC6DjIvSfhYeQwGfpMqvtq5F?=
+ =?Windows-1252?Q?Pkln+iMzu3Cm1HYOCfFU5M4v4sCvDsIcwftpNlrrMWT/e9LsXevMAycN?=
+ =?Windows-1252?Q?6r/ChFos3Lnp4X6DnWasbVH4CH/9t5f3sx9ooH7bMlabFWqq5W69C3+7?=
+ =?Windows-1252?Q?X+Eue9FRBzAxY7nS7ONiWQcZv1dJN8nVE7d28ABsAlhQDGSG3qHkjeVr?=
+ =?Windows-1252?Q?ehbmzqdgWC9DagAXTbhZCU2q06Y05ObYsCNrYZe4xw08Q48exg2wKf/s?=
+ =?Windows-1252?Q?BMvFEa/hjz9e2aIV2IF4gJ6cmRl+pbi6ag/YOERBonZpLIaCcf9SBMme?=
+ =?Windows-1252?Q?xHrfQdF9Th5wSYTFDVMQs5wFq1ActIFWh712fSFZ1LO5rjiO5Z64bzYq?=
+ =?Windows-1252?Q?tbJmvn8ZwK5yCvfZ95Dw09RU1a2Lh7Eg/Dfb/oBvh4TuJlkZ24VeTrjX?=
+ =?Windows-1252?Q?SG2SiZdfhMnP+gNPbRAO9vh5sPW7/1PYpCIVNWoGzarFAsMPZ96EtiAz?=
+ =?Windows-1252?Q?YY5T7bgbGPWGu4x8jbxrMmbvzxWZ6Wd0QGs0KfY2mq3cm8Y42hgo0k0F?=
+ =?Windows-1252?Q?cnLmJ5ZxcdzIz0Qdzi/eBW1K8Ox9U05c8okwa8Y06DAzTj4GSzHA/uWf?=
+ =?Windows-1252?Q?KxXy3n1DLrAITykIdfj9vlzmZGY/3FGR3Qpnah7Mud0xSly3iq2EWlPF?=
+ =?Windows-1252?Q?LWnxUZCbKYAGU+U8QqLof1Z3SSh+3IcVHBHkzJikQhhbhf22w2m+0YbX?=
+ =?Windows-1252?Q?JNcvZBGYbQxYK6Wb0YHc+2nfl0uTi6O2Kkx+61TkwK6+vNC6KT0vbQTA?=
+ =?Windows-1252?Q?9XUoI2sqEFua91Xb8aFe4RxGTjMpPNS+8YIkq0dAkqelNsy8MVh6+GYT?=
+ =?Windows-1252?Q?XBpgFde0iznCAgyy0F/2VOBIcLvp1rwf0M/QSYoS0edPY4ut9pqyXAf1?=
+ =?Windows-1252?Q?LqZIfnUZnpuW2Q=3D=3D?=
+MIME-Version: 1.0
+
+--_000_PN3PR01MB7712424EDCCD8DDC2E495C4897A72PN3PR01MB7712INDP_
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+Bank of XYZ, NA
+Date
+Phone
+Fax %
+Email
+ABC BANK NATIONAL ASSOCIATION
+S-Sep-2011
+AGENT DEFAULT
+877-656-2055
+CANTOR FITZGERALD LP USD 411MM MAR25/ REVOLVER / CANTOR89
+Deal CUSIP% 1386199
+Deal IS00
+US13861EAE97
+Facility CUS!P 13861EA50
+ISIN: US13861EA31
+Lender MEL}
+We will process a request for transfer of borrowal account, either from you=
+ or from a bank/financial institution, in the normal course and convey our =
+concurrence or otherwise within two weeks of receipt of request. A cashless=
+ rollover=94or cashless roll is a deemed exchange of existing term loans fo=
+r new or amended term loans from the same lender to the same borrower. Incr=
+ease or decrease processing of transactions of money.
+For: ABC BANK NATIONAL ASSOCIATION
+To ABC BANK, NA
+ABA Number: 1=DC46
+Account No : XXXXXXXXXX0212
+Reference : CANTOR1 FITZGERALD LP USO 425MM MAR20 , SOFR (US) Term Principa=
+l Payment (CANTOR [&00031)
+Thanks & Regards,
+JINKU ARUH
+Telephone # +300
+Email :
+Q Search
+
+
+--_000_PN3PR01MB7712424EDCCD8DDC2E495C4897A72PN3PR01MB7712INDP_
+Content-Type: text/html; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+<html><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DWindows-1=
+252">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div style=3D"background-color: rgb(255, 255, 255); margin: 0px;">
+<div class=3D"elementToProof" style=3D"direction: ltr; text-align: left; te=
+xt-indent: 0px; margin: 0px; font-family: Aptos, Aptos_EmbeddedFont, Aptos_=
+MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; color: blac=
+k;">
+Bank of XYZ, NA</div>
+</div>
+<div class=3D"elementToProof" style=3D"direction: ltr; text-align: left; te=
+xt-indent: 0px; background-color: rgb(255, 255, 255); margin: 0px; font-fam=
+ily: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sa=
+ns-serif; font-size: 12pt; color: black;">
+Date</div>
+<div class=3D"elementToProof" style=3D"direction: ltr; text-align: left; te=
+xt-indent: 0px; background-color: rgb(255, 255, 255); margin: 0px; font-fam=
+ily: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sa=
+ns-serif; font-size: 12pt; color: black;">
+Phone</div>
+<div class=3D"elementToProof" style=3D"direction: ltr; text-align: left; te=
+xt-indent: 0px; background-color: rgb(255, 255, 255); margin: 0px; font-fam=
+ily: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sa=
+ns-serif; font-size: 12pt; color: black;">
+Fax %</div>
+<div class=3D"elementToProof" style=3D"direction: ltr; text-align: left; te=
+xt-indent: 0px; background-color: rgb(255, 255, 255); margin: 0px; font-fam=
+ily: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sa=
+ns-serif; font-size: 12pt; color: black;">
+Email</div>
+<div class=3D"elementToProof" style=3D"direction: ltr; text-align: left; te=
+xt-indent: 0px; background-color: rgb(255, 255, 255); margin: 0px; font-fam=
+ily: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sa=
+ns-serif; font-size: 12pt; color: black;">
+ABC BANK NATIONAL ASSOCIATION</div>
+<div class=3D"elementToProof" style=3D"direction: ltr; text-align: left; te=
+xt-indent: 0px; background-color: rgb(255, 255, 255); margin: 0px; font-fam=
+ily: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sa=
+ns-serif; font-size: 12pt; color: black;">
+S-Sep-2011</div>
+<div class=3D"elementToProof" style=3D"direction: ltr; text-align: left; te=
+xt-indent: 0px; background-color: rgb(255, 255, 255); margin: 0px; font-fam=
+ily: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sa=
+ns-serif; font-size: 12pt; color: black;">
+AGENT DEFAULT</div>
+<div class=3D"elementToProof" style=3D"direction: ltr; text-align: left; te=
+xt-indent: 0px; background-color: rgb(255, 255, 255); margin: 0px; font-fam=
+ily: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sa=
+ns-serif; font-size: 12pt; color: black;">
+877-656-2055</div>
+<div class=3D"elementToProof" style=3D"direction: ltr; text-align: left; te=
+xt-indent: 0px; background-color: rgb(255, 255, 255); margin: 0px; font-fam=
+ily: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sa=
+ns-serif; font-size: 12pt; color: black;">
+CANTOR FITZGERALD LP USD 411MM MAR25/ REVOLVER / CANTOR89</div>
+<div class=3D"elementToProof" style=3D"direction: ltr; text-align: left; te=
+xt-indent: 0px; background-color: rgb(255, 255, 255); margin: 0px; font-fam=
+ily: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sa=
+ns-serif; font-size: 12pt; color: black;">
+Deal CUSIP% 1386199</div>
+<div class=3D"elementToProof" style=3D"direction: ltr; text-align: left; te=
+xt-indent: 0px; background-color: rgb(255, 255, 255); margin: 0px; font-fam=
+ily: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sa=
+ns-serif; font-size: 12pt; color: black;">
+Deal IS00</div>
+<div class=3D"elementToProof" style=3D"direction: ltr; text-align: left; te=
+xt-indent: 0px; background-color: rgb(255, 255, 255); margin: 0px; font-fam=
+ily: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sa=
+ns-serif; font-size: 12pt; color: black;">
+US13861EAE97</div>
+<div class=3D"elementToProof" style=3D"direction: ltr; text-align: left; te=
+xt-indent: 0px; background-color: rgb(255, 255, 255); margin: 0px; font-fam=
+ily: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sa=
+ns-serif; font-size: 12pt; color: black;">
+Facility CUS!P 13861EA50</div>
+<div class=3D"elementToProof" style=3D"direction: ltr; text-align: left; te=
+xt-indent: 0px; background-color: rgb(255, 255, 255); margin: 0px; font-fam=
+ily: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sa=
+ns-serif; font-size: 12pt; color: black;">
+ISIN: US13861EA31</div>
+<div class=3D"elementToProof" style=3D"direction: ltr; text-align: left; te=
+xt-indent: 0px; background-color: rgb(255, 255, 255); margin: 0px; font-fam=
+ily: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sa=
+ns-serif; font-size: 12pt; color: black;">
+Lender MEL}</div>
+<div class=3D"elementToProof" style=3D"direction: ltr; text-align: left; te=
+xt-indent: 0px; background-color: rgb(255, 255, 255); margin: 0px; font-fam=
+ily: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sa=
+ns-serif; font-size: 12pt; color: black;">
+We will process a request for transfer of borrowal account, either from you=
+ or from a bank/financial institution, in the normal course and convey our =
+concurrence or otherwise within two weeks of receipt of request. A cashless=
+ rollover=94or cashless roll is a
+ deemed exchange of existing term loans for new or amended term loans from =
+the same lender to the same borrower. Increase or decrease processing of tr=
+ansactions of money.</div>
+<div class=3D"elementToProof" style=3D"direction: ltr; text-align: left; te=
+xt-indent: 0px; background-color: rgb(255, 255, 255); margin: 0px; font-fam=
+ily: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sa=
+ns-serif; font-size: 12pt; color: black;">
+For: ABC BANK NATIONAL ASSOCIATION</div>
+<div class=3D"elementToProof" style=3D"direction: ltr; text-align: left; te=
+xt-indent: 0px; background-color: rgb(255, 255, 255); margin: 0px; font-fam=
+ily: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sa=
+ns-serif; font-size: 12pt; color: black;">
+To ABC BANK, NA</div>
+<div class=3D"elementToProof" style=3D"direction: ltr; text-align: left; te=
+xt-indent: 0px; background-color: rgb(255, 255, 255); margin: 0px; font-fam=
+ily: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sa=
+ns-serif; font-size: 12pt; color: black;">
+ABA Number: 1=DC46</div>
+<div class=3D"elementToProof" style=3D"direction: ltr; text-align: left; te=
+xt-indent: 0px; background-color: rgb(255, 255, 255); margin: 0px; font-fam=
+ily: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sa=
+ns-serif; font-size: 12pt; color: black;">
+Account No : XXXXXXXXXX0212</div>
+<div class=3D"elementToProof" style=3D"direction: ltr; text-align: left; te=
+xt-indent: 0px; background-color: rgb(255, 255, 255); margin: 0px; font-fam=
+ily: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sa=
+ns-serif; font-size: 12pt; color: black;">
+Reference : CANTOR1 FITZGERALD LP USO 425MM MAR20&nbsp;, SOFR (US) Term Pri=
+ncipal Payment (CANTOR [&amp;00031)</div>
+<div class=3D"elementToProof" style=3D"direction: ltr; text-align: left; te=
+xt-indent: 0px; background-color: rgb(255, 255, 255); margin: 0px; font-fam=
+ily: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sa=
+ns-serif; font-size: 12pt; color: black;">
+Thanks &amp; Regards,</div>
+<div class=3D"elementToProof" style=3D"direction: ltr; text-align: left; te=
+xt-indent: 0px; background-color: rgb(255, 255, 255); margin: 0px; font-fam=
+ily: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sa=
+ns-serif; font-size: 12pt; color: black;">
+JINKU&nbsp;ARUH</div>
+<div class=3D"elementToProof" style=3D"direction: ltr; text-align: left; te=
+xt-indent: 0px; background-color: rgb(255, 255, 255); margin: 0px; font-fam=
+ily: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sa=
+ns-serif; font-size: 12pt; color: black;">
+Telephone # +300</div>
+<div class=3D"elementToProof" style=3D"direction: ltr; text-align: left; te=
+xt-indent: 0px; background-color: rgb(255, 255, 255); margin: 0px; font-fam=
+ily: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sa=
+ns-serif; font-size: 12pt; color: black;">
+Email :</div>
+<div class=3D"elementToProof" style=3D"direction: ltr; text-align: left; te=
+xt-indent: 0px; background-color: rgb(255, 255, 255); margin: 0px; font-fam=
+ily: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sa=
+ns-serif; font-size: 12pt; color: black;">
+Q Search</div>
+<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
+nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
+olor: rgb(0, 0, 0);">
+<br>
+</div>
+</body>
+</html>
+
+--_000_PN3PR01MB7712424EDCCD8DDC2E495C4897A72PN3PR01MB7712INDP_--
